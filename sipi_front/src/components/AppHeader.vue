@@ -1,5 +1,5 @@
 <template>
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4" v-if="!hideHeader">
         <div class="container-fluid">
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav me-auto mb-2 mb-md-0">
@@ -14,8 +14,7 @@
 
             <ul class="navbar-nav me-auto mb-2 mb-md-0">
                 <li class="nav-item mr-2">
-                    <router-link v-if="!isAuthenticated" to="/login" class="nav-link"> Sign in </router-link>
-                    <span v-else class="nav-link"> Logged in </span>
+                    <span class="nav-link"> Logged in </span>
                 </li>
             </ul>
         </div>

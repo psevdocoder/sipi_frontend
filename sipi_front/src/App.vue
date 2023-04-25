@@ -1,6 +1,8 @@
 <template>
     <div>
-        <AppHeader :isAuthenticated="isAuthenticated" />
+        <template v-if="showHeader">
+            <AppHeader :isAuthenticated="isAuthenticated" />
+        </template>
         <router-view />
         <AppFooter />
     </div>
@@ -9,7 +11,7 @@
 <script>
 import AppFooter from "@/components/AppFooter.vue";
 import AppHeader from "@/components/AppHeader.vue";
-import { computed, onMounted } from "vue";
+import {computed, onMounted, reactive, ref} from "vue";
 import { useRouter } from "vue-router";
 
 export default {
@@ -45,10 +47,24 @@ export default {
             return null;
         };
 
+        const showHeader = computed(() => {
+            return router.currentRoute.value.path !== "/login";
+        });
+
+        // переменная для отображения мини-окна с информацией о профиле
+        const showProfileInfo = ref(false);
+
+        // информация о пользователе, полученная с сервера
+        const user = reactive(JSON.parse(getCookieValue("user")));
+
         return {
             isAuthenticated,
+            showHeader,
+            showProfileInfo,
+            user
         };
     },
+
 };
 </script>
 
