@@ -1,7 +1,7 @@
 <template>
-  <div class="footer">
-    <p>🤡 Group Assistant 2023</p>
-  </div>
+    <div class="footer">
+        <p> <a href="https://vk.com/id194144317">🤡</a> Group Assistant 2023</p>
+    </div>
 </template>
 
 <style>
