@@ -3,7 +3,9 @@
         <template v-if="showHeader">
             <AppHeader :isAuthenticated="isAuthenticated" />
         </template>
-        <router-view />
+        <div class="container">
+            <router-view />
+        </div>
         <AppFooter />
     </div>
 </template>
@@ -69,4 +71,7 @@ export default {
 </script>
 
 <style scoped>
+.container {
+    padding: 20px;
+}
 </style>
