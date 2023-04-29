@@ -4,14 +4,14 @@
         <hr class="hr">
         <h2>Предметы</h2>
         <div class="subjects">
-            <SipiSubject v-for="subject in subjects" :key="subject.id" :title="subject.title" />
+            <SipiSubject v-for="subject in subjects" :key="subject.id" :title="subject.title" :slug="subject.slug" />
         </div>
     </div>
 </template>
 
 
 <script>
-import {onMounted, ref} from "vue";
+import { onMounted, ref } from "vue";
 import SipiSubject from "@/components/SipiSubject.vue";
 
 export default {
@@ -31,6 +31,26 @@ export default {
                 }
             }
             return null;
+        };
+
+        const redirectToQueue = async (slug) => {
+            const jwt = getCookieValue("jwt");
+            if (jwt) {
+                const response = await fetch(
+                    `https://assistant.5pwjust.ru/api/queue/?subject=${slug}`,
+                    {
+                        method: "GET",
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${jwt}`,
+                        },
+                        credentials: "include",
+                    }
+                );
+                if (response.ok) {
+                    // обработка ответа сервера
+                }
+            }
         };
 
         onMounted(async () => {
@@ -54,10 +74,12 @@ export default {
 
         return {
             subjects,
+            redirectToQueue,
         };
     },
 };
 </script>
+
 
 <style>
 .subjects {

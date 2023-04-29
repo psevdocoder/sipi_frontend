@@ -4,7 +4,8 @@ import AppLogin from "@/views/AppLogin.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {path: '', component: Home},
-  {path: '/login', component: AppLogin}
+  {path: '/login', component: AppLogin},
+  // {path: '/queue:slug', component: }
 ]
 
 const router = createRouter({
