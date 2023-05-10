@@ -11,7 +11,7 @@
 
 
 <script>
-import { onMounted, ref } from "vue";
+import {onMounted, ref} from "vue";
 import SipiSubject from "@/components/SipiSubject.vue";
 
 export default {
@@ -21,6 +21,10 @@ export default {
     },
     setup() {
         const subjects = ref([]);
+        const username = ref("");
+        const role = ref("");
+        const personal_cipher = ref("");
+        const user_fullname = ref("");
 
         const getCookieValue = (name) => {
             const cookies = document.cookie.split(";");
@@ -54,9 +58,20 @@ export default {
         };
 
         onMounted(async () => {
+            const user = getCookieValue("user");
             const jwt = getCookieValue("jwt");
-            if (jwt) {
-                const response = await fetch("https://assistant.5pwjust.ru/api/subjects/", {
+
+            document.cookie = `user=${JSON.stringify(user)}`; // сохраняем информацию о пользователе в куки
+            username.value = user.username; // получаем имя пользователя
+            const roleNames = ["пользователь", "модератор", "администратор"];
+            role.value = roleNames[user.role - 1];
+            personal_cipher.value = user.personal_cipher;
+            user_fullname.value = user.user_fullname;
+
+
+            const subjectsCookie = getCookieValue("subjects");
+            if (!subjectsCookie) {
+                const response_subjects = await fetch("https://assistant.5pwjust.ru/api/subjects/", {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
@@ -64,17 +79,24 @@ export default {
                     },
                     credentials: "include",
                 });
-                if (response.ok) {
-                    const subjectsList = await response.json();
+                if (response_subjects.ok) {
+                    const subjectsList = await response_subjects.json();
                     document.cookie = `subjects=${JSON.stringify(subjectsList)}`;
                     subjects.value = subjectsList;
                 }
+            } else {
+                subjects.value = JSON.parse(subjectsCookie);
             }
         });
+
 
         return {
             subjects,
             redirectToQueue,
+            username,
+            role,
+            personal_cipher,
+            user_fullname
         };
     },
 };
