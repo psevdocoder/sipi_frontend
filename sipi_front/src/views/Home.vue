@@ -2,15 +2,14 @@
     <div>
         <h1 style="text-align: center">Список предметов</h1>
         <div class="subjects subjects-wrapper">
-            <SipiSubject class="subject-item"  v-for="subject in subjects" :key="subject.id" :title="subject.title" :slug="subject.slug" />
+            <SipiSubject class="subject-item"  v-for="subject in subjects" :key="subject.id" :title="subject.title" :slug="subject.slug" :queue="subject.queue" />
         </div>
     </div>
 </template>
 
-
 <script>
 import SipiSubject from "@/components/SipiSubject.vue";
-import {onBeforeMount, onMounted, ref} from "vue";
+import {onMounted, ref} from "vue";
 
 export default {
     name: "AppHome",
@@ -23,7 +22,6 @@ export default {
         const role = ref("");
         const personal_cipher = ref("");
         const user_fullname = ref("");
-        const queue_list = ref([])
 
         const getCookieValue = (name) => {
             const cookies = document.cookie.split(";");
@@ -36,9 +34,9 @@ export default {
             return null;
         };
 
-        const jwt = getCookieValue("jwt")
-        onBeforeMount(() => {
-            const response_subject_queue = fetch(`https://assistant.5pwjust.ru/api/queue/?subject=${this.slug}`, {
+        const fetchSubjectQueue = async (subjectSlug) => {
+            const jwt = getCookieValue("jwt");
+            const response = await fetch(`https://assistant.5pwjust.ru/api/queue/?subject=${subjectSlug}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -46,12 +44,11 @@ export default {
                 },
                 credentials: "include",
             });
-            if (response_subject_queue.ok) {
-                queue_list.value = response_subject_queue.json();
+            if (response.ok) {
+                return await response.json();
             }
-
-        });
-
+            return null;
+        };
 
         onMounted(async () => {
             const user = getCookieValue("user");
@@ -65,7 +62,7 @@ export default {
 
 
             const subjectsCookie = getCookieValue("subjects");
-            if (!subjectsCookie && jwt) {
+            if (jwt) {
                 const response_subjects = await fetch("https://assistant.5pwjust.ru/api/subjects/", {
                     method: "GET",
                     headers: {
@@ -77,8 +74,20 @@ export default {
                 if (response_subjects.ok) {
                     const subjectsList = await response_subjects.json();
                     document.cookie = `subjects=${JSON.stringify(subjectsList)}`;
-                    subjects.value = subjectsList;
+
+                    // запрос очередей для каждого предмета
+                    const promises = subjectsList.map(async (subject) => {
+                        const queue = await fetchSubjectQueue(subject.slug);
+                        // console.log(queue)
+                        return {
+                            ...subject,
+                            queue: queue,
+                        };
+                    });
+                    const subjectsWithQueue = await Promise.all(promises);
+                    subjects.value = subjectsWithQueue;
                 }
+
             } else {
                 subjects.value = JSON.parse(subjectsCookie);
             }
@@ -119,7 +128,7 @@ export default {
     border-radius: 20px;
     transition: all 0.3s ease;
     width: 200px;
-    height: 100px;
+    height: auto;
     word-wrap: break-word;
 }
 

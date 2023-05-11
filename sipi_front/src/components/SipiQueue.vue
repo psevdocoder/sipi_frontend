@@ -1,10 +1,10 @@
 <template>
     <div>
-        <h1>Очередь</h1>
+        <h1>Очередь на</h1>
         <hr class="hr">
         <div class="queue">
             <div class="queue-item" v-for="item in queue" :key="item.id">
-                {{ item.name }}
+                {{ item.user_fullname }}
             </div>
         </div>
     </div>
