@@ -9,8 +9,8 @@
 
 
 <script>
-import {onMounted, ref} from "vue";
 import SipiSubject from "@/components/SipiSubject.vue";
+import {onBeforeMount, onMounted, ref} from "vue";
 
 export default {
     name: "AppHome",
@@ -23,6 +23,7 @@ export default {
         const role = ref("");
         const personal_cipher = ref("");
         const user_fullname = ref("");
+        const queue_list = ref([])
 
         const getCookieValue = (name) => {
             const cookies = document.cookie.split(";");
@@ -34,6 +35,23 @@ export default {
             }
             return null;
         };
+
+        const jwt = getCookieValue("jwt")
+        onBeforeMount(() => {
+            const response_subject_queue = fetch(`https://assistant.5pwjust.ru/api/queue/?subject=${this.slug}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${jwt}`,
+                },
+                credentials: "include",
+            });
+            if (response_subject_queue.ok) {
+                queue_list.value = response_subject_queue.json();
+            }
+
+        });
+
 
         onMounted(async () => {
             const user = getCookieValue("user");
@@ -72,7 +90,8 @@ export default {
             username,
             role,
             personal_cipher,
-            user_fullname
+            user_fullname,
+            getCookieValue
         };
     },
 };

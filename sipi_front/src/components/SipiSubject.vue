@@ -1,10 +1,15 @@
 <template>
     <div class="subject" @click="goToQueue">
         {{ title }}
+        {{ queue_list }}
+
     </div>
 </template>
 
 <script>
+import {onMounted, ref} from "vue";
+import {getCookieValue} from "@/views/Home.vue";
+
 export default {
     name: "SipiSubject",
     props: {

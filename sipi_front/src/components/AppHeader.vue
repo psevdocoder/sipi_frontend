@@ -17,7 +17,7 @@
                     <span class="nav-link">Logged in</span>
                 </li>
                 <li class="nav-item">
-                    <button class="btn btn-primary" @click="openPopup">User Info</button>
+                    <button class="btn btn-primary profile-button" @click="openPopup">User Info</button>
                 </li>
             </ul>
         </div>
@@ -79,10 +79,15 @@ export default {
     font-weight: bold;
     font-size: x-large;
 }
+
 .router-link-active {
     text-decoration: underline;
     text-underline-position: under;
     color: blue;
-
 }
+
+.profile-button {
+    font-size: x-large;
+}
+
 </style>
