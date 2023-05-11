@@ -1,5 +1,5 @@
-<template>
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4" v-if="!hideHeader">
+<template v-if="!hideheader">
+    <nav class="navbar navbar-expand-md bg-transparent mb-4">
         <div class="container-fluid">
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav me-auto mb-2 mb-md-0">
@@ -29,17 +29,6 @@
 <script>
 import UserInfoPopup from './UserInfoPopup.vue';
 
-function getCookie(name) {
-    const cookies = document.cookie.split(";");
-    for (let i = 0; i < cookies.length; i++) {
-        const cookie = cookies[i].trim();
-        if (cookie.startsWith(name + "=")) {
-            return cookie.substring(name.length + 1);
-        }
-    }
-    return null;
-}
-
 export default {
     name: "AppHeader",
     components: {
@@ -58,10 +47,6 @@ export default {
         };
     },
 
-
-    mounted() {
-        this.userInfo = JSON.parse(getCookie('user'));
-    },
     methods: {
         openPopup() {
             this.isPopupOpen = true;
@@ -75,4 +60,15 @@ export default {
 
 
 <style scoped>
+
+.nav-link {
+    font-weight: bold;
+    font-size: x-large;
+}
+.router-link-active {
+    text-decoration: underline;
+    text-underline-position: under;
+    color: blue;
+
+}
 </style>

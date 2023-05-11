@@ -1,10 +1,8 @@
 <template>
     <div>
-        <h1>Домашняя страница</h1>
-        <hr class="hr">
-        <h2>Предметы</h2>
-        <div class="subjects">
-            <SipiSubject v-for="subject in subjects" :key="subject.id" :title="subject.title" :slug="subject.slug" />
+        <h1 style="text-align: center">Список предметов</h1>
+        <div class="subjects subjects-wrapper">
+            <SipiSubject class="subject-item"  v-for="subject in subjects" :key="subject.id" :title="subject.title" :slug="subject.slug" />
         </div>
     </div>
 </template>
@@ -37,31 +35,10 @@ export default {
             return null;
         };
 
-        const redirectToQueue = async (slug) => {
-            const jwt = getCookieValue("jwt");
-            if (jwt) {
-                const response = await fetch(
-                    `https://assistant.5pwjust.ru/api/queue/?subject=${slug}`,
-                    {
-                        method: "GET",
-                        headers: {
-                            "Content-Type": "application/json",
-                            Authorization: `Bearer ${jwt}`,
-                        },
-                        credentials: "include",
-                    }
-                );
-                if (response.ok) {
-                    // обработка ответа сервера
-                }
-            }
-        };
-
         onMounted(async () => {
             const user = getCookieValue("user");
             const jwt = getCookieValue("jwt");
 
-            document.cookie = `user=${JSON.stringify(user)}`; // сохраняем информацию о пользователе в куки
             username.value = user.username; // получаем имя пользователя
             const roleNames = ["пользователь", "модератор", "администратор"];
             role.value = roleNames[user.role - 1];
@@ -70,7 +47,7 @@ export default {
 
 
             const subjectsCookie = getCookieValue("subjects");
-            if (!subjectsCookie) {
+            if (!subjectsCookie && jwt) {
                 const response_subjects = await fetch("https://assistant.5pwjust.ru/api/subjects/", {
                     method: "GET",
                     headers: {
@@ -92,7 +69,6 @@ export default {
 
         return {
             subjects,
-            redirectToQueue,
             username,
             role,
             personal_cipher,
@@ -116,5 +92,27 @@ export default {
     margin: 20px 0;
     border: none;
 }
+
+.subject-item {
+    margin: 10px;
+    padding: 10px;
+    border: 4px solid dodgerblue;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    width: 200px;
+    height: 100px;
+    word-wrap: break-word;
+}
+
+.subjects-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+
+
+
+
 
 </style>
