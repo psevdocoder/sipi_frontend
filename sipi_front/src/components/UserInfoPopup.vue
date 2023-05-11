@@ -32,20 +32,16 @@ export default {
     border: 1px solid #ddd;
     border-radius: 10px; /* Добавлено свойство border-radius */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    opacity: 1;
-    z-index: 999;
 }
 
 .exit-button {
-    background-color: #ff0000;
+    background-color: #ef476f;
     color: #fff;
     font-size: 16px;
     border: none;
     padding: 8px 16px;
     border-radius: 5px;
     cursor: pointer;
-    justify-content: center;
-    display: flex;
 }
 
 </style>
