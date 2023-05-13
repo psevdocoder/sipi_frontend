@@ -1,6 +1,6 @@
 <template>
     <div @click="goToQueue">
-        <div> {{ title }}</div>
+        <div style="font-weight: bolder"> {{ title }}</div>
         <div> Человек в очереди: {{ queue.length }} </div>
     </div>
 </template>

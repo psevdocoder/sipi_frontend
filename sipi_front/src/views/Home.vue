@@ -1,7 +1,7 @@
 <template>
     <loading-overlay :load-data="loadData">
         <div>
-            <h1 style="text-align: center">Список предметов</h1>
+            <h2 style="text-align: center">Список предметов</h2>
             <div class="subjects subjects-wrapper">
                 <SipiSubject
                     class="subject-item"
@@ -128,10 +128,20 @@ export default {
     border: 4px solid dodgerblue;
     border-radius: 20px;
     transition: all 0.3s ease;
-    width: 200px;
+    width: 17%;
     height: auto;
     word-wrap: break-word;
+    cursor: pointer;
+    background-color: #fff;
+    box-shadow: 0 5px 40px rgba(30, 144, 255, 0.34);
+    background-color: rgba(220, 236, 255, 0.62);
 }
+
+.subject-item:hover {
+    background-color: dodgerblue;
+    color: #fff;
+}
+
 
 .subjects-wrapper {
     display: flex;

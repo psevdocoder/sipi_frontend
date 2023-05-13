@@ -1,6 +1,6 @@
 <template>
     <div class="footer">
-        <p> <a href="https://vk.com/id194144317">🤡</a> Group Assistant 2023</p>
+        <p> <a style="text-decoration: none" href="https://vk.com/id194144317">🤡</a> Group Assistant 2023</p>
     </div>
 </template>
 
@@ -10,7 +10,7 @@
   bottom: 0;
   text-align: center;
   width: 100%;
-  padding: 10px;
+  padding: 0;
 }
 </style>
 
