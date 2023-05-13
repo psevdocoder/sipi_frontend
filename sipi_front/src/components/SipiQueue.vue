@@ -39,6 +39,10 @@ export default {
             type: String,
             required: true,
         },
+        subject: {
+            type: Object,
+            required: true,
+        },
     },
     setup(props) {
         const route = useRoute();
@@ -47,8 +51,6 @@ export default {
         onMounted(() => {
             title.value = route.query.title || "";
         });
-
-
 
 
         const queue = ref([]);
@@ -77,7 +79,6 @@ export default {
                 });
                 if (response.ok) {
                     queue.value = await response.json();
-                    console.log(queue.value);
                 }
             }
         };
@@ -88,10 +89,6 @@ export default {
             const user = JSON.parse(getCookieValue("user"));
             return queue.value.some(item => item.username === user.username);
         };
-        console.log(JSON.parse(getCookieValue("user")))
-
-        console.log(isInQueue())
-
 
         const joinQueue = async () => {
             const jwt = getCookieValue("jwt");
@@ -109,8 +106,6 @@ export default {
                     await loadData();
                 }
             }
-
-            console.log(isInQueue())
         };
 
         const leaveQueue = async () => {
@@ -128,8 +123,6 @@ export default {
                     await loadData();
                 }
             }
-
-            console.log(isInQueue())
         };
 
 
@@ -146,6 +139,7 @@ export default {
             leaveQueue,
             joinQueue,
             isInQueue,
+            props,
         };
     },
 };
@@ -158,8 +152,8 @@ export default {
 }
 
 .queue-item {
-    margin: 10px 0;
-    padding: 20px;
+    margin: 5px 0;
+    padding: 10px;
     background-color: #f5f5f5;
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);

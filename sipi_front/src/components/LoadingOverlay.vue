@@ -41,7 +41,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: rgba(0, 0, 0, 0.29);
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .loading-spinner {

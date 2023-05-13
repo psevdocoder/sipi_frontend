@@ -10,6 +10,7 @@
                     :title="subject.title"
                     :slug="subject.slug"
                     :queue="subject.queue"
+                    :subject="subject"
                 />
             </div>
         </div>
@@ -70,7 +71,6 @@ export default {
             personal_cipher.value = user.personal_cipher;
             user_fullname.value = user.user_fullname;
 
-            const subjectsCookie = getCookieValue("subjects");
             if (jwt) {
                 const response_subjects = await fetch(
                     "https://assistant.5pwjust.ru/api/subjects/",
@@ -85,7 +85,6 @@ export default {
                 );
                 if (response_subjects.ok) {
                     const subjectsList = await response_subjects.json();
-                    document.cookie = `subjects=${JSON.stringify(subjectsList)}`;
 
                     // запрос очередей для каждого предмета
                     const promises = subjectsList.map(async (subject) => {
@@ -97,8 +96,6 @@ export default {
                     });
                     subjects.value = await Promise.all(promises);
                 }
-            } else {
-                subjects.value = JSON.parse(subjectsCookie);
             }
         };
 
