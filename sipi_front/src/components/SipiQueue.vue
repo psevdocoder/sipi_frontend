@@ -1,21 +1,30 @@
 <template>
     <div>
-        <h1>Очередь на {{ title }}</h1>
-        <hr class="hr">
-        <div class="queue">
-            <div class="queue-item" v-for="item in queue" :key="item.id">
-                {{ item.user_fullname }}
+        <loading-overlay :load-data="loadData">
+            <div>
+                <h1>Очередь на {{ title }}</h1>
+                <hr class="hr">
+                <div class="queue">
+                    <div class="queue-item" v-for="item in queue" :key="item.id">
+                        {{ item.user_fullname }}
+                    </div>
+                </div>
             </div>
-        </div>
+        </loading-overlay>
     </div>
 </template>
 
 <script>
-import {onMounted, ref} from "vue";
-import {useRoute} from "vue-router";
+import LoadingOverlay from "@/components/LoadingOverlay";
+
+import { onMounted, ref } from "vue";
+import { useRoute } from "vue-router";
 
 export default {
     name: "SipiQueue",
+    components: {
+        LoadingOverlay,
+    },
     props: {
         slug: {
             type: String,
@@ -23,15 +32,12 @@ export default {
         },
     },
     setup(props) {
-
         const route = useRoute();
         const title = ref("");
 
         onMounted(() => {
             title.value = route.query.title || "";
         });
-
-
 
         const queue = ref([]);
         const getCookieValue = (name) => {
@@ -47,32 +53,29 @@ export default {
 
         const slugValue = ref(props.slug);
 
-        // console.log(slugValue.value)
-
-        onMounted(async () => {
+        const loadData = async () => {
             const jwt = getCookieValue("jwt");
             if (jwt) {
                 const response = await fetch(`https://assistant.5pwjust.ru/api/queue/?subject=${slugValue.value}`, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
-                        "Authorization": `Bearer ${jwt}`,
+                        Authorization: `Bearer ${jwt}`,
                     },
                     credentials: "include",
                 });
                 if (response.ok) {
                     queue.value = await response.json();
-
-                    console.log(queue.value)
-
+                    console.log(queue.value);
                 }
             }
-        });
+        };
 
         return {
             queue,
             slugValue,
             title,
+            loadData,
         };
     },
 };
