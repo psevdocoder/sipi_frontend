@@ -39,10 +39,6 @@ export default {
             type: String,
             required: true,
         },
-        subject: {
-            type: Object,
-            required: true,
-        },
     },
     setup(props) {
         const route = useRoute();
@@ -139,7 +135,6 @@ export default {
             leaveQueue,
             joinQueue,
             isInQueue,
-            props,
         };
     },
 };
@@ -159,7 +154,6 @@ export default {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     width: 80%;
     max-width: 600px;
-    /*border: 4px silver solid;*/
 }
 
 .queue-button {

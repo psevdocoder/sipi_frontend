@@ -10,7 +10,6 @@
                     :title="subject.title"
                     :slug="subject.slug"
                     :queue="subject.queue"
-                    :subject="subject"
                 />
             </div>
         </div>
