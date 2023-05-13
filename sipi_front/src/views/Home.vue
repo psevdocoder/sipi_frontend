@@ -55,8 +55,6 @@ export default {
             const jwt = getCookieValue("jwt");
 
             username.value = user.username; // получаем имя пользователя
-            const roleNames = ["пользователь", "модератор", "администратор"];
-            role.value = roleNames[user.role - 1];
             personal_cipher.value = user.personal_cipher;
             user_fullname.value = user.user_fullname;
 
@@ -84,8 +82,7 @@ export default {
                             queue: queue,
                         };
                     });
-                    const subjectsWithQueue = await Promise.all(promises);
-                    subjects.value = subjectsWithQueue;
+                    subjects.value = await Promise.all(promises);
                 }
 
             } else {
@@ -137,10 +134,5 @@ export default {
     flex-wrap: wrap;
     justify-content: center;
 }
-
-
-
-
-
 
 </style>

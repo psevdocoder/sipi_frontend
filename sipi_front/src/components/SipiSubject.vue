@@ -7,8 +7,6 @@
 
 <script>
 
-import {onMounted} from "vue";
-
 export default {
     name: "SipiSubject",
     props: {
@@ -18,7 +16,10 @@ export default {
     },
     methods: {
         goToQueue() {
-            this.$router.push({ path: `/queue/${this.slug}` });
+            this.$router.push({
+                path: `/queue/${this.slug}`,
+                query: { title: this.title }, // передача названия предмета через query параметр
+            });
         },
     },
 };

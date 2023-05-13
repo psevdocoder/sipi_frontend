@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>Очередь на</h1>
+        <h1>Очередь на {{ title }}</h1>
         <hr class="hr">
         <div class="queue">
             <div class="queue-item" v-for="item in queue" :key="item.id">
@@ -12,6 +12,7 @@
 
 <script>
 import {onMounted, ref} from "vue";
+import {useRoute} from "vue-router";
 
 export default {
     name: "SipiQueue",
@@ -22,6 +23,16 @@ export default {
         },
     },
     setup(props) {
+
+        const route = useRoute();
+        const title = ref("");
+
+        onMounted(() => {
+            title.value = route.query.title || "";
+        });
+
+
+
         const queue = ref([]);
         const getCookieValue = (name) => {
             const cookies = document.cookie.split(";");
@@ -61,6 +72,7 @@ export default {
         return {
             queue,
             slugValue,
+            title,
         };
     },
 };
