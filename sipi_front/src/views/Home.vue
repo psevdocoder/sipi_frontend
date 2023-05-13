@@ -16,7 +16,7 @@
     </loading-overlay>
 </template>
 <script>
-import SipiSubject from "@/components/SipiSubject.vue";
+import SipiSubject from "@/components/SubjectMini.vue";
 import { ref } from "vue";
 import LoadingOverlay from "@/components/LoadingOverlay.vue";
 

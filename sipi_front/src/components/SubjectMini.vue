@@ -8,7 +8,7 @@
 <script>
 
 export default {
-    name: "SipiSubject",
+    name: "SubjectMini",
     props: {
         title: String,
         slug: String,

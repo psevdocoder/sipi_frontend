@@ -6,7 +6,7 @@ import SipiQueue from "@/components/SipiQueue.vue";
 const routes: Array<RouteRecordRaw> = [
   {path: '', component: Home},
   {path: '/login', component: AppLogin},
-  {path: '/queue/:slug', component: SipiQueue, props: true}
+  {path: '/queue/:slug', component: SipiQueue, props: true},
 ]
 
 const router = createRouter({

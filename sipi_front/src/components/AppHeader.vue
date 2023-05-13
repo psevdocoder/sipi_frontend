@@ -6,12 +6,11 @@
                     <li class="nav-item">
                         <router-link to="/" class="nav-link">Home</router-link>
                     </li>
-                    <li class="nav-item">
+                    <li v-if="userInfo && userInfo.role === 3" class="nav-item">
                         <router-link to="/subjects" class="nav-link">Subjects</router-link>
                     </li>
                 </ul>
             </div>
-
             <ul class="navbar-nav me-auto mb-2 mb-md-0">
                 <li class="nav-item mr-2">
                     <span class="nav-link">Logged in</span>
@@ -21,7 +20,6 @@
                 </li>
             </ul>
         </div>
-
         <UserInfoPopup v-if="isPopupOpen" :user-info="userInfo" @close="closePopup"/>
     </nav>
 </template>
@@ -44,6 +42,11 @@ export default {
     name: "AppHeader",
     components: {
         UserInfoPopup,
+    },
+    computed: {
+        hideheader() {
+            return !this.isAuthenticated;
+        }
     },
     props: {
         isAuthenticated: {
@@ -88,6 +91,7 @@ export default {
 
 .profile-button {
     font-size: x-large;
+    border-radius: 15px;
 }
 
 </style>

@@ -2,18 +2,21 @@
     <div>
         <loading-overlay :load-data="loadData">
             <div>
-                <h1>Очередь на {{ title }}</h1>
-                <hr class="hr">
-                <div class="queue">
-                    <div class="queue-item" v-for="item in queue" :key="item.id">
-                        {{ item.user_fullname }}
+                <h1 style="text-align: center" >Очередь на "{{ title }}"</h1>
+                <div class="queue" >
+                    <div class="queue-item" v-for="(item, index) in queue" :key="item.id">
+                        Номер в очереди: {{ index+1 }}
+                        <br>
+                        Имя: {{ item.user_fullname }}
+                        <br>
+                        Пользователь в очереди с {{ new Date(item.timestamp).toLocaleString() }}
+                        <br>
                     </div>
                 </div>
             </div>
         </loading-overlay>
     </div>
 </template>
-
 <script>
 import LoadingOverlay from "@/components/LoadingOverlay";
 
@@ -80,21 +83,21 @@ export default {
     },
 };
 </script>
-
 <style scoped>
 .queue {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
 }
 
 .queue-item {
-    margin: 10px;
+    margin: 3px;
     padding: 10px;
     border: 4px solid dodgerblue;
     border-radius: 20px;
     transition: all 0.3s ease;
-    width: 200px;
-    height: 100px;
+    width: 40%;
+    height: auto;
     word-wrap: break-word;
 }
 </style>
