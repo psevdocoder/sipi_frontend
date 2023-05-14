@@ -6,7 +6,6 @@ on:
 
 jobs:
   deploy:
-    needs: build_and_push
     runs-on: ubuntu-latest
     steps:
       - name: Deploy to server
@@ -16,7 +15,7 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            cd sipi/sipi_frontend
+            cd sipi/sipi_frontend/sipi_front
             git clone https://github.com/psevdocoder/sipi_frontend.git
             docker rmi sipi_frontend
             rm -rf dist
