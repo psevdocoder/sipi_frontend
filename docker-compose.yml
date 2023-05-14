@@ -7,4 +7,4 @@ services:
       dockerfile: Dockerfile
     container_name: sipi_frontend
     volumes:
-      - ./frontend_build:/app/result_build/
+      - ./dist:/app/dist/

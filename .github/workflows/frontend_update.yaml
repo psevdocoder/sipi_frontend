@@ -17,10 +17,11 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd sipi/sipi_frontend
+            git clone https://github.com/psevdocoder/sipi_frontend.git
             docker rmi sipi_frontend
-            rm -rf frontend_build
+            rm -rf dist
 #            docker build . --file Dockerfile --tag sipi_frontend
-            docker compose up -d
+            docker compose up -d --build
             docker compose down
 
   send_message:
