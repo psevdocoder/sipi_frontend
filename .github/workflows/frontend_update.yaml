@@ -22,7 +22,9 @@ jobs:
             cd ..
             docker compose up -d --build
             docker compose down
-            docker rmi sipi_frontend
+            if docker image ls sipi_frontend -q ; then
+              docker image rm --force sipi_frontend
+            fi
 
   send_message:
     runs-on: ubuntu-latest
