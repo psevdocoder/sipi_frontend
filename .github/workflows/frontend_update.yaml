@@ -20,7 +20,6 @@ jobs:
             git clone https://github.com/psevdocoder/sipi_frontend.git
             docker rmi sipi_frontend
             rm -rf dist
-#            docker build . --file Dockerfile --tag sipi_frontend
             docker compose up -d --build
             docker compose down
 
