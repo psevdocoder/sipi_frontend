@@ -5,26 +5,34 @@ on:
     branches: [ "master" ]
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
+
     steps:
+      - name: Install dependencies
+        run: |
+          cd sipi_front
+          npm install
+
+      - name: Build app
+        run: npm run build
+
+      - name: Copy build artifacts
+        run: |
+          mkdir -p deploy
+          cp -R dist/* deploy/
+
       - name: Deploy to server
-        uses: appleboy/ssh-action@master
+        uses: easingthemes/ssh-deploy@v2.2.14
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_KEY }}
+          ARGS: "-rltgoDzvO --delete"
         with:
-          host: ${{ secrets.SERVER_HOST }}
+          server: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
-          script: |
-            cd sipi/sipi_frontend
-            git pull
-            cd sipi_front
-            rm -rf dist
-            cd ..
-            docker compose up -d --build
-            docker compose down
-            if docker image ls sipi_frontend -q ; then
-              docker image rm --force sipi_frontend
-            fi
+#          port: ${{ secrets.PORT }}
+          source: deploy/
+          target: /root/sipi/frontend
 
   send_message:
     runs-on: ubuntu-latest
