@@ -1,6 +1,6 @@
 <template>
     <div>
-        <nav class="navbar navbar-expand-md bg-transparent mb-4" style="padding-left: 10%; padding-right: 10%">
+        <nav class="navbar navbar-expand-md bg-transparent mb-4" >
             <div class="container-fluid">
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <ul class="navbar-nav me-auto mb-2 mb-md-0">

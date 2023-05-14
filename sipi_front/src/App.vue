@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div style="padding-left: 10%; padding-right: 10%">
         <template v-if="showHeader">
             <AppHeader :isAuthenticated="isAuthenticated" />
         </template>

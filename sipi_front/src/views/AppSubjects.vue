@@ -1,23 +1,20 @@
 <template>
     <loading-overlay :load-data="loadData">
         <div class="subjects">
-            <div class="subject" v-for="subject in subjects" :key="subject.id"
-                 :class="{ 'green': subject.queue_is_open, 'red': !subject.queue_is_open }">
-                <p> {{subject.title}} </p>
-                <button class="open" v-if="!subject.queue_is_open"  @click="openQueue(subject.slug)">Открыть для очереди</button>
-                <button class="close" v-if="subject.queue_is_open" @click="closeQueue(subject.slug)">Закрыть для очереди</button>
-                <button class="delete" @click="deleteSubject(subject.id)">Удалить</button>
-
+            <div v-for="subject in subjects" :key="subject.id" class="subject" :class="{ 'green': subject.queue_is_open, 'red': !subject.queue_is_open }">
+                <button class="btn btn-delete" @click="deleteSubject(subject.id)">X</button>
+                <h2 class="subject__title">{{ subject.title }}</h2>
+                <button v-if="!subject.queue_is_open" class="btn btn-primary" @click="openQueue(subject.slug)">Открыть для очереди</button>
+                <button v-else class="btn btn-primary" @click="closeQueue(subject.slug)">Закрыть для очереди</button>
             </div>
         </div>
-        <form @submit.prevent="createSubject">
-            <label for="title">Название предмета:</label>
-            <input id="title" type="text" v-model="newSubjectTitle" required>
-            <button type="submit">Создать</button>
+        <form @submit.prevent="createSubject" class="new-subject-form">
+            <input id="title" type="text" v-model="newSubjectTitle" class="new-subject-form__input" placeholder="Название нового предмета" required>
+            <button type="submit" class="btn btn-primary new-subject-form__submit">Создать</button>
         </form>
-
     </loading-overlay>
 </template>
+
 
 
 <script>
@@ -149,50 +146,92 @@ export default {
 
 
 <style>
-
 .subjects {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: left;
 }
+
 .subject {
     width: 20%;
+    height: max-content;
     margin: 20px;
     padding: 10px;
     background-color: #fff;
     border: 1px solid #ddd;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
     text-align: center;
     display: flex;
     flex-direction: column;
     border-radius: 20px;
 }
+
+.subject__title {
+    font-size: small;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
 .subject.green {
     background-color: #c8e6c9;
 }
 .subject.red {
     background-color: #ffcdd2;
 }
-.subject p {
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-.subject button {
+
+.btn {
     margin-top: auto;
-    padding: 10px 20px;
+    padding: 5px 5px;
     border: none;
     color: #fff;
-    font-size: 16px;
+    font-size: small;
     font-weight: bold;
     cursor: pointer;
     outline: none;
     border-radius: 15px;
 }
-.subject button.open {
+
+.btn-primary {
     background-color: #2196f3;
 }
-.subject button.close {
+
+.new-subject-form {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-bottom: 7%;
+}
+
+
+.new-subject-form__input {
+    padding: 10px;
+    border-radius: 15px;
+    border: 2px solid #ddd;
+    width: 110%;
+    max-width: 400px;
+    margin-bottom: 10px;
+
+}
+
+.btn-delete {
+    background-color: #dc3545;
+    width: 25px;
+    height: 25px;
+    font-size: 14px;
+    padding: 0;
+    top: 0;
+    left: 0;
+    line-height: 1;
+}
+
+.new-subject-form__submit {
     background-color: #2196f3;
+    width: 60%;
+    max-width: 400px;
 }
 </style>

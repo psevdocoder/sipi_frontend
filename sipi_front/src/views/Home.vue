@@ -2,7 +2,7 @@
     <loading-overlay :load-data="loadData">
         <div>
             <h2 style="text-align: center">Список предметов</h2>
-            <div class="subjects subjects-wrapper">
+            <div class="subjects-home subjects-wrapper">
                 <SubjectMini
                     class="subject-item"
                     v-for="subject in subjects"
@@ -116,9 +116,11 @@ export default {
 
 
 <style>
-.subjects {
-    display: flex;
+.subjects-home {
+    display: flow;
     flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
 }
 
 .subject-item {
@@ -127,6 +129,7 @@ export default {
     border: 4px solid dodgerblue;
     border-radius: 20px;
     transition: all 0.3s ease;
+
     width: 25%;
     height: auto;
     word-wrap: break-word;
