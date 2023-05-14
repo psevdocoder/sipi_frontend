@@ -3,20 +3,21 @@
         <div>
             <h2 style="text-align: center">Список предметов</h2>
             <div class="subjects subjects-wrapper">
-                <SipiSubject
+                <SubjectMini
                     class="subject-item"
                     v-for="subject in subjects"
                     :key="subject.id"
                     :title="subject.title"
                     :slug="subject.slug"
                     :queue="subject.queue"
+                    :queue_is_open="subject.queue_is_open"
                 />
             </div>
         </div>
     </loading-overlay>
 </template>
 <script>
-import SipiSubject from "@/components/SubjectMini.vue";
+import SubjectMini from "@/components/SubjectMini.vue";
 import { ref } from "vue";
 import LoadingOverlay from "@/components/LoadingOverlay.vue";
 
@@ -24,7 +25,7 @@ export default {
     name: "AppHome",
     components: {
         LoadingOverlay,
-        SipiSubject,
+        SubjectMini,
     },
     setup() {
         const subjects = ref([]);
@@ -94,9 +95,11 @@ export default {
                         };
                     });
                     subjects.value = await Promise.all(promises);
+                    console.log(subjects)
                 }
             }
         };
+
 
         return {
             subjects,
@@ -124,7 +127,7 @@ export default {
     border: 4px solid dodgerblue;
     border-radius: 20px;
     transition: all 0.3s ease;
-    width: 17%;
+    width: 25%;
     height: auto;
     word-wrap: break-word;
     cursor: pointer;

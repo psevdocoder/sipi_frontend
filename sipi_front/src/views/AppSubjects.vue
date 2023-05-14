@@ -6,20 +6,29 @@
                 <p> {{subject.title}} </p>
                 <button class="open" v-if="!subject.queue_is_open"  @click="openQueue(subject.slug)">Открыть для очереди</button>
                 <button class="close" v-if="subject.queue_is_open" @click="closeQueue(subject.slug)">Закрыть для очереди</button>
+                <button class="delete" @click="deleteSubject(subject.id)">Удалить</button>
+
             </div>
         </div>
+        <form @submit.prevent="createSubject">
+            <label for="title">Название предмета:</label>
+            <input id="title" type="text" v-model="newSubjectTitle" required>
+            <button type="submit">Создать</button>
+        </form>
+
     </loading-overlay>
 </template>
 
 
 <script>
-import {ref} from "vue";
+import { ref } from "vue";
 import LoadingOverlay from "@/components/LoadingOverlay.vue";
 
 export default {
     name: "AppSubjects",
     components: {LoadingOverlay},
     setup() {
+        const newSubjectTitle = ref("")
         const subjects = ref([]);
 
         const getCookieValue = (name) => {
@@ -48,6 +57,42 @@ export default {
                 subjects.value = data.sort((a, b) => a.id - b.id);
             }
         }
+
+        async function deleteSubject(id) {
+            console.log(id)
+            const jwt = getCookieValue("jwt");
+            const response = await fetch(`https://assistant.5pwjust.ru/api/subjects/${id}/`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${jwt}`,
+                },
+                credentials: "include"
+            });
+            if (response.ok) {
+                await loadData();
+            }
+        }
+
+
+        async function createSubject() {
+            const jwt = getCookieValue("jwt");
+            const response = await fetch("https://assistant.5pwjust.ru/api/subjects/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${jwt}`,
+                },
+                credentials: "include",
+                body: JSON.stringify({ title: newSubjectTitle.value })
+            });
+            if (response.ok) {
+                newSubjectTitle.value = '';
+                await loadData();
+            }
+        }
+
+
 
         async function openQueue(subjectSlug) {
             const jwt = getCookieValue("jwt");
@@ -93,7 +138,10 @@ export default {
             subjects,
             loadData,
             openQueue,
-            closeQueue
+            closeQueue,
+            createSubject,
+            deleteSubject,
+            newSubjectTitle,
         };
     },
 };
@@ -108,7 +156,7 @@ export default {
     justify-content: center;
 }
 .subject {
-    width: 200px;
+    width: 20%;
     margin: 20px;
     padding: 10px;
     background-color: #fff;

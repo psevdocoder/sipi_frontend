@@ -3,6 +3,8 @@
         <loading-overlay :load-data="loadData">
             <div>
                 <h2 style="text-align: center" >Очередь на "{{ title }}"</h2>
+                <div v-if="isOpen" style="text-align: center; font-weight: bold; color: green">Очередь открыта</div>
+                <div v-else style="text-align: center; font-weight: bold; color: red">Очередь закрыта</div>
                 <div class="queue">
                     <div class="queue-item" v-for="(item, index) in queue" :key="item.id">
                         Номер в очереди: {{ index+1 }}
@@ -13,7 +15,7 @@
                         <br>
                     </div>
                     <div>
-                        <button class="queue-button" @click="joinQueue" :disabled="isInQueue()">Встать в очередь</button>
+                        <button class="queue-button" @click="joinQueue" :disabled="isInQueue() || !isOpen">Встать в очередь</button>
                         <button class="queue-button" @click="leaveQueue" :disabled="!isInQueue()">Выйти из очереди</button>
                     </div>
                 </div>
@@ -40,12 +42,21 @@ export default {
             required: true,
         },
     },
+
+    computed: {
+        isOpen() {
+            return this.queue_is_open === "true";
+        }
+    },
+
     setup(props) {
         const route = useRoute();
         const title = ref("");
+        const queue_is_open = ref("");
 
         onMounted(() => {
             title.value = route.query.title || "";
+            queue_is_open.value = route.query.queue_is_open;
         });
 
 
@@ -135,6 +146,7 @@ export default {
             leaveQueue,
             joinQueue,
             isInQueue,
+            queue_is_open,
         };
     },
 };

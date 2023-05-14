@@ -1,6 +1,6 @@
 <template>
     <main class="form-signin w-100 m-auto">
-        <h1 class="text-center">Sign in</h1>
+        <h1 class="text-center" style="font-weight: bold">Авторизация</h1>
         <form @submit.prevent="submit" >
             <div class="form-floating">
                 <input v-model="data.username" type="text" class="form-control" id="floatingInput" placeholder="Username">
@@ -10,7 +10,7 @@
                 <input v-model="data.password" type="password" class="form-control" id="floatingPassword" placeholder="Password">
                 <label for="floatingPassword">Password</label>
             </div>
-            <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+            <button class="w-100 btn btn-lg btn-primary" type="submit">Авторизоваться</button>
         </form>
         <div v-if="data.errorMessage" class="error-message">{{ data.errorMessage }}</div> <!-- добавляем элемент для вывода сообщения об ошибке -->
     </main>
@@ -68,6 +68,10 @@ export default {
 .form-signin {
     max-width: 330px;
     padding: 8px;
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .text-center {

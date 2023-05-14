@@ -13,12 +13,14 @@ export default {
         title: String,
         slug: String,
         queue: Array(String),
+        queue_is_open: String,
     },
     methods: {
         goToQueue() {
+          console.log(this.is_open)
             this.$router.push({
                 path: `/queue/${this.slug}`,
-                query: { title: this.title }, // передача названия предмета через query параметр
+                query: { title: this.title, queue_is_open: this.queue_is_open }, // передача названия предмета через query параметр
             });
         },
     },
