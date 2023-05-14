@@ -1,0 +1,10 @@
+version: '3.3'
+services:
+
+  sipi_frontend:
+    build:
+      context: sipi_front
+      dockerfile: Dockerfile
+    container_name: sipi_frontend
+    volumes:
+      - ./frontend_build:/app/result_build/
