@@ -1,6 +1,6 @@
 FROM node:latest AS build
 WORKDIR /app
-COPY package*.json ./
+COPY ./sipi_front/package*.json ./
 RUN npm install
 COPY ./sipi_front .
 RUN npm run build
