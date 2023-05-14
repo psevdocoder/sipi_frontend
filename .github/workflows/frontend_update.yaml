@@ -19,6 +19,7 @@ jobs:
             git pull
             cd sipi_front
             rm -rf dist
+            cd ..
             docker compose up -d --build
             docker compose down
             docker rmi sipi_frontend
