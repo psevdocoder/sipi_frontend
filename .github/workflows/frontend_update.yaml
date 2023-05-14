@@ -15,12 +15,13 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            cd sipi/sipi_frontend/sipi_front
-            git clone https://github.com/psevdocoder/sipi_frontend.git
-            docker rmi sipi_frontend
+            cd sipi/sipi_frontend
+            git pull
+            cd sipi_front
             rm -rf dist
             docker compose up -d --build
             docker compose down
+            docker rmi sipi_frontend
 
   send_message:
     runs-on: ubuntu-latest
