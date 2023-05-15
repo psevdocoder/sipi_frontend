@@ -43,16 +43,18 @@ export default {
         },
     },
 
-    computed: {
-        isOpen() {
-            return this.queue_is_open === "true";
-        }
-    },
+    // computed: {
+    //     isOpen() {
+    //         return this.queue_is_open === "true";
+    //     }
+    // },
 
     setup(props) {
         const route = useRoute();
         const title = ref("");
         const queue_is_open = ref("");
+        const slugValue = ref(props.slug);
+        const isOpen = ref(false);
 
         onMounted(() => {
             title.value = route.query.title || "";
@@ -76,7 +78,7 @@ export default {
         const loadData = async () => {
             const jwt = getCookieValue("jwt");
             if (jwt) {
-                const response = await fetch(`https://assistant.5pwjust.ru/api/queue/?subject=${slugValue.value}`, {
+                const response = await fetch(`https://assistant.5pwjust.ru/api/queue/filtered/?subject=${slugValue.value}`, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
@@ -85,10 +87,15 @@ export default {
                     credentials: "include",
                 });
                 if (response.ok) {
-                    queue.value = await response.json();
+                    const responseData = await response.json();
+                    queue.value = responseData.queue_persons;
+                    queue_is_open.value = responseData.is_open;
+                    title.value = responseData.subject_name;
+                    isOpen.value = responseData.is_open;
                 }
             }
         };
+
 
 
 
@@ -134,7 +141,7 @@ export default {
 
 
 
-        const slugValue = ref(props.slug);
+
 
 
 
@@ -147,6 +154,7 @@ export default {
             joinQueue,
             isInQueue,
             queue_is_open,
+            isOpen
         };
     },
 };

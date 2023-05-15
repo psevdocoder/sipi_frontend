@@ -2,15 +2,15 @@
     <loading-overlay :load-data="loadData">
         <div class="subjects">
             <div v-for="subject in subjects" :key="subject.id" class="subject" :class="{ 'green': subject.queue_is_open, 'red': !subject.queue_is_open }">
-                <button class="btn btn-delete" @click="deleteSubject(subject.id)">X</button>
+                <button class="btn-subjects btn-delete" @click="deleteSubject(subject.id)">X</button>
                 <h2 class="subject__title">{{ subject.title }}</h2>
-                <button v-if="!subject.queue_is_open" class="btn btn-primary" @click="openQueue(subject.slug)">Открыть для очереди</button>
-                <button v-else class="btn btn-primary" @click="closeQueue(subject.slug)">Закрыть для очереди</button>
+                <button v-if="!subject.queue_is_open" class="btn-subjects btn-primary" @click="openQueue(subject.slug)">Открыть для очереди</button>
+                <button v-else class="btn-subjects btn-primary" @click="closeQueue(subject.slug)">Закрыть для очереди</button>
             </div>
         </div>
         <form @submit.prevent="createSubject" class="new-subject-form">
             <input id="title" type="text" v-model="newSubjectTitle" class="new-subject-form__input" placeholder="Название нового предмета" required>
-            <button type="submit" class="btn btn-primary new-subject-form__submit">Создать</button>
+            <button type="submit" class="btn-subjects btn-primary new-subject-form__submit">Создать</button>
         </form>
     </loading-overlay>
 </template>
@@ -153,7 +153,8 @@ export default {
 }
 
 .subject {
-    width: 20%;
+    max-width: 250px;
+    min-width: 150px;
     height: max-content;
     margin: 20px;
     padding: 10px;
@@ -179,7 +180,7 @@ export default {
     background-color: #ffcdd2;
 }
 
-.btn {
+.btn-subjects {
     margin-top: auto;
     padding: 5px 5px;
     border: none;

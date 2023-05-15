@@ -84,7 +84,6 @@ export default {
     font-weight: bold;
     font-size: x-large;
     color: dimgrey;
-
 }
 
 

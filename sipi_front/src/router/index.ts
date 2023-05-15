@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import Home from "@/views/Home.vue";
+import Home from "@/views/AppHome.vue";
 import AppLogin from "@/views/AppLogin.vue";
 import SipiQueue from "@/components/SipiQueue.vue";
 import AppSubjects from "@/views/AppSubjects.vue";
