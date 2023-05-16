@@ -3,7 +3,7 @@
         <div class="subjects">
             <div v-for="subject in subjects" :key="subject.id" class="subject"
                  :class="{ 'green': subject.queue_is_open, 'red': !subject.queue_is_open }">
-                <button class="btn-subjects btn-delete" @click="deleteSubject(subject.id)">X</button>
+                <button class="btn-subjects btn-delete" @click="deleteSubject(subject.slug)">X</button>
                 <h2 class="subject__title">{{ subject.title }}</h2>
                 <button v-if="!subject.queue_is_open" class="btn-subjects btn-primary" @click="openQueue(subject.slug)">Открыть для очереди</button>
                 <button v-else class="btn-subjects btn-primary" @click="closeQueue(subject.slug)">Закрыть для очереди</button>
@@ -56,10 +56,10 @@ export default {
             }
         }
 
-        async function deleteSubject(id) {
-            console.log(id)
+        async function deleteSubject(slug) {
+            console.log(slug)
             const jwt = getCookieValue("jwt");
-            const response = await fetch(`https://assistant.5pwjust.ru/api/subjects/${id}/`, {
+            const response = await fetch(`https://assistant.5pwjust.ru/api/subjects/${slug}/`, {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
