@@ -1,7 +1,8 @@
 <template>
     <loading-overlay :load-data="loadData">
         <div class="subjects">
-            <div v-for="subject in subjects" :key="subject.id" class="subject" :class="{ 'green': subject.queue_is_open, 'red': !subject.queue_is_open }">
+            <div v-for="subject in subjects" :key="subject.id" class="subject"
+                 :class="{ 'green': subject.queue_is_open, 'red': !subject.queue_is_open }">
                 <button class="btn-subjects btn-delete" @click="deleteSubject(subject.id)">X</button>
                 <h2 class="subject__title">{{ subject.title }}</h2>
                 <button v-if="!subject.queue_is_open" class="btn-subjects btn-primary" @click="openQueue(subject.slug)">Открыть для очереди</button>
@@ -156,29 +157,37 @@ export default {
     max-width: 250px;
     min-width: 150px;
     height: max-content;
+    transition: all 0.3s ease;
     margin: 20px;
     padding: 10px;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
     text-align: center;
     display: flex;
     flex-direction: column;
     border-radius: 20px;
+    color: white;
 }
 
 .subject__title {
-    font-size: small;
+    font-size: medium;
     font-weight: bold;
     margin-bottom: 10px;
 }
 
 .subject.green {
-    background-color: #c8e6c9;
+    box-shadow: 0 10px 40px #008000A5;
+    background-color: #3CB371FF;
 }
 .subject.red {
-    background-color: #ffcdd2;
+    box-shadow: 0 10px 40px #FF4400BA;
+    background-color: #FF4D00DA;
+    /*color: black;*/
 }
+
+.subject:hover {
+    transform: scale(1.05);
+    transition: all 0.3s ease-in-out; /* плавный переход в течение 0.3 секунд */
+}
+
 
 .btn-subjects {
     margin-top: auto;
@@ -193,7 +202,7 @@ export default {
 }
 
 .btn-primary {
-    background-color: #2196f3;
+    background-color: royalblue;
 }
 
 .new-subject-form {
@@ -220,7 +229,7 @@ export default {
 }
 
 .btn-delete {
-    background-color: #dc3545;
+    background-color: #de0000;
     width: 25px;
     height: 25px;
     font-size: 14px;
@@ -228,6 +237,11 @@ export default {
     top: 0;
     left: 0;
     line-height: 1;
+}
+
+.btn-delete:hover {
+    transform: scale(1.1);
+    transition: all 0.3s ease-out; /* плавный переход в течение 0.3 секунд */
 }
 
 .new-subject-form__submit {

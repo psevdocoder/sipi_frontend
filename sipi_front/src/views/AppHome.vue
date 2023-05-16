@@ -2,7 +2,9 @@
     <div class="subjects-home">
         <LoadingOverlay :loadData="fetchData">
             <div class="subjects-wrapper">
-                <div v-for="(subject, index) in subjects" :key="index" @click="goToQueuePage(subject.slug)" class="subject-item">
+                <div v-for="(subject, index) in subjects" :key="index" @click="goToQueuePage(subject.slug)" class="subject-item"
+                     :class="{'subject-item-open': subject.queue_is_open, 'subject-item-closed': !subject.queue_is_open}">
+
                     <h5>{{ subject.title }}</h5>
                     <p v-if="subject.queue_is_open">Очередь открыта</p>
                     <p v-else>Очередь закрыта</p>
@@ -88,7 +90,6 @@ export default {
 .subject-item {
     margin: 10px;
     padding: 10px;
-    border: 4px solid dodgerblue;
     border-radius: 20px;
     transition: all 0.3s ease;
     line-height: 0.1;
@@ -97,14 +98,25 @@ export default {
     height: auto;
     word-wrap: break-word;
     cursor: pointer;
-    background-color: #fff;
+    color: white;
     box-shadow: 0 5px 40px rgba(30, 144, 255, 0.34);
     background-color: rgba(220, 236, 255, 0.62);
 }
 
-.subject-item:hover {
-    background-color: dodgerblue;
-    color: #fff;
+.subject-item-open {
+    box-shadow: 0 10px 40px #008000A5;
+    background-color: #3CB371FF;
 }
 
+.subject-item-closed {
+    box-shadow: 0 10px 40px #FF4400BA;
+    background-color: #FF4D00DA;
+    color: white;
+}
+
+
+.subject-item:hover {
+    transform: scale(1.05);
+    transition: all 0.3s ease; /* плавный переход в течение 0.3 секунд */
+}
 </style>

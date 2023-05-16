@@ -3,11 +3,10 @@
         <template v-if="showHeader">
             <AppHeader :isAuthenticated="isAuthenticated" />
         </template>
-        <div>
+        <div id="content-wrap">
             <router-view />
         </div>
-        <br>
-        <AppFooter />
+        <AppFooter/>
     </div>
 </template>
 
@@ -67,7 +66,6 @@ export default {
             user
         };
     },
-
 };
 </script>
 

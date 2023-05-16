@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import Home from "@/views/AppHome.vue";
 import AppLogin from "@/views/AppLogin.vue";
-import SipiQueue from "@/components/SipiQueue.vue";
+import SipiQueue from "@/views/SipiQueue.vue";
 import AppSubjects from "@/views/AppSubjects.vue";
 
 const routes: Array<RouteRecordRaw> = [

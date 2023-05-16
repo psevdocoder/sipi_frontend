@@ -26,7 +26,7 @@
 
 
 <script>
-import LoadingOverlay from "@/components/LoadingOverlay";
+import LoadingOverlay from "@/components/LoadingOverlay.vue";
 
 import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
